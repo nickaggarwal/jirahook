@@ -30,7 +30,8 @@ public class JIRAIssue implements Issue {
         while (issueObjectList.hasNext()){
             JSONObject obj = issueObjectList.next();
             String issueName = obj.get("issueKey").toString();
-            Integer storyPoint = Integer.parseInt(((JSONObject)obj.get("fields")).get("storyPoints").toString());
+            JSONObject fields = (JSONObject) obj.get("fields") ;
+            Integer storyPoint = Integer.parseInt( fields.get("storyPoints").toString());
             JIRAIssue jiraIssue = new JIRAIssue(issueName, storyPoint);
             issues.add(jiraIssue);
         }

@@ -1,5 +1,6 @@
 package com.nilesh.jirahook.controller;
 
+import com.google.gson.Gson;
 import com.nilesh.jirahook.entity.Issue;
 import com.nilesh.jirahook.entity.QueueMessage;
 import com.nilesh.jirahook.queue.Queue;
@@ -26,18 +27,20 @@ public class IssueSumController {
 
     @RequestMapping("api/issue/sum")
     public String greeting(@RequestParam(value="query") String query, @RequestParam(value = "name") String name) {
+        String Status = "Success";
         try {
-            List<Issue> issues = issueTrackerService.getIssues(query);
+            List<? extends Issue> issues = issueTrackerService.getIssues(query);
+            Gson gson = new Gson();
             int result = 0;
             for (Issue issue : issues) {
                 result += issue.getStoryPoints();
             }
             QueueMessage queueMessage = new QueueMessage(name, result);
-            awsQueue.pushMessage("String");
-            return "Success";
+            awsQueue.pushMessage(gson.toJson(queueMessage));
         } catch (Exception ex){
             log.error("Get Sum API Failed", ex);
+            Status = "Fail" ;
         }
-        return "Success" ;
+        return Status;
     }
 }

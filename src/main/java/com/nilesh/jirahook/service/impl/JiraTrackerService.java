@@ -32,7 +32,7 @@ public class JiraTrackerService implements IssueTrackerService {
 
     @Override
     public List<? extends Issue> getIssues(String Query) {
-        List<? extends Issue> issueList = new ArrayList<>();
+        List<JIRAIssue> issueList = new ArrayList<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
