@@ -5,6 +5,7 @@ import com.nilesh.jirahook.entity.JIRAIssue;
 import com.nilesh.jirahook.service.impl.JiraTrackerService;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +19,19 @@ public class JiraTrackerServiceTests {
     private static JiraTrackerService jiraTrackerService ;
     private static RestTemplate restTemplate;
 
-    @Before
-    public void setup(){
-        if (jiraTrackerService == null) {
-            System.setProperty("JIRA_URL", "http://localhost:8000");
-            restTemplate = Mockito.mock(RestTemplate.class);
-            ResponseEntity<String> responseEntity = ResponseEntity.ok(
-                    "[{ \"issueKey\": \"TEST-1\", \"fields\": { \"storyPoints\": 1 } }," +
-                            "{ \"issueKey\": \"TEST-2\", \"fields\": { \"storyPoints\": 2 } }]");
-            Mockito.when(restTemplate.exchange(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(Class.class))).thenReturn(responseEntity);
-            jiraTrackerService = new JiraTrackerService(restTemplate);
-        }
-
+    @BeforeClass
+    public static void setup(){
+        System.setProperty("JIRA_URL", "http://localhost:8000");
+        restTemplate = Mockito.mock(RestTemplate.class);
+        ResponseEntity<String> responseEntity = ResponseEntity.ok(
+                "[{ \"issueKey\": \"TEST-1\", \"fields\": { \"storyPoints\": 1 } }," +
+                        "{ \"issueKey\": \"TEST-2\", \"fields\": { \"storyPoints\": 2 } }]");
+        Mockito.when(restTemplate.exchange(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(Class.class))).thenReturn(responseEntity);
+        jiraTrackerService = new JiraTrackerService(restTemplate);
     }
 
     @Test
     public void getAllIssues() {
-
         List<JIRAIssue> jiraIssues = new ArrayList<>();
         jiraIssues.add(new JIRAIssue("TEST-1", 1));
         jiraIssues.add(new JIRAIssue("TEST-2", 2));
