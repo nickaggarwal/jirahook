@@ -37,4 +37,22 @@ public class JIRAIssue implements Issue {
         }
         return issues;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        JIRAIssue jiraIssue = (JIRAIssue) o;
+
+        return issueKey != null ? issueKey.equals(jiraIssue.issueKey) : jiraIssue.issueKey == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (issueKey != null ? issueKey.hashCode() : 0);
+        return result;
+    }
 }

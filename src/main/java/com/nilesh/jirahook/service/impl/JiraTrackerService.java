@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +23,15 @@ import java.util.List;
 @Component
 public class JiraTrackerService implements IssueTrackerService {
 
-    @Autowired
-    RestTemplate restTemplate;
-
     @Value("${JIRA_URL}")
     private String endpoint;
 
-    private final String api = "/rest/api/2/search" ;
+    private final String issueApi = "/rest/api/2/search" ;
+    private RestTemplate restTemplate;
+
+    public JiraTrackerService(@Autowired RestTemplate restTemplate){
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public List<? extends Issue> getIssues(String Query) {
@@ -36,7 +39,9 @@ public class JiraTrackerService implements IssueTrackerService {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        String result = restTemplate.exchange(endpoint + api, HttpMethod.GET, entity, String.class).getBody();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(endpoint + issueApi)
+                .queryParam(Query);
+        String result = restTemplate.exchange( builder.build().toUri() , HttpMethod.GET, entity, String.class).getBody();
         try {
             issueList = JIRAIssue.getIssueFromJson(result) ;
         } catch (ParseException ex){

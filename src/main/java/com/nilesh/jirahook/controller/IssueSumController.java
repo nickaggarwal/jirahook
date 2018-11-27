@@ -26,7 +26,7 @@ public class IssueSumController {
     }
 
     @RequestMapping("api/issue/sum")
-    public String greeting(@RequestParam(value="query") String query, @RequestParam(value = "name") String name) {
+    public String sumIssue(@RequestParam(value="query") String query, @RequestParam(value = "name") String name) {
         String Status = "Success";
         try {
             List<? extends Issue> issues = issueTrackerService.getIssues(query);
