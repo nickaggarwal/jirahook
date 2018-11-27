@@ -21,8 +21,8 @@ public class AmazonSQS implements Queue {
         this.client = AmazonSQSClientBuilder.defaultClient();
     }
 
-    public AmazonSQS(String queueUrl){
-        this.client = AmazonSQSClientBuilder.defaultClient();
+    public AmazonSQS(String queueUrl, com.amazonaws.services.sqs.AmazonSQS amazonSQS){
+        this.client = amazonSQS;
         this.queueUrl = queueUrl ;
     }
 

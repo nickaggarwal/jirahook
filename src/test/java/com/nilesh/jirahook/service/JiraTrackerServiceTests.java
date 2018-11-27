@@ -3,23 +3,14 @@ package com.nilesh.jirahook.service;
 import com.nilesh.jirahook.entity.Issue;
 import com.nilesh.jirahook.entity.JIRAIssue;
 import com.nilesh.jirahook.service.impl.JiraTrackerService;
-import org.apache.http.util.Asserts;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JiraTrackerServiceTests {
