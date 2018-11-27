@@ -41,7 +41,8 @@ public class IssueSumController {
             log.error("Get Sum API Failed", ex);
             Status = "Fail" ;
             throw ex;
+        }finally {
+            return Status;
         }
-        return Status;
     }
 }
