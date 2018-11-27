@@ -40,6 +40,7 @@ public class IssueSumController {
         } catch (Exception ex){
             log.error("Get Sum API Failed", ex);
             Status = "Fail" ;
+            throw ex;
         }
         return Status;
     }
