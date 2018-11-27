@@ -31,8 +31,8 @@ public class JiraTrackerService implements IssueTrackerService {
     private final String api = "/rest/api/2/search" ;
 
     @Override
-    public List<Issue> getIssues(String Query) {
-        List<JIRAIssue> issueList = new ArrayList<>();
+    public List<? extends Issue> getIssues(String Query) {
+        List<? extends Issue> issueList = new ArrayList<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -40,9 +40,9 @@ public class JiraTrackerService implements IssueTrackerService {
         try {
             issueList = JIRAIssue.getIssueFromJson(result) ;
         } catch (ParseException ex){
-
+            log.error("Could not convert Issues from Rest API", ex);
         }
-        return new ArrayList<>();
+        return issueList;
     }
 
 }

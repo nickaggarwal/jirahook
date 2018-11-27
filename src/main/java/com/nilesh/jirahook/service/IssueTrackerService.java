@@ -5,5 +5,5 @@ import com.nilesh.jirahook.entity.Issue;
 import java.util.List;
 
 public interface IssueTrackerService {
-    public List<Issue> getIssues(String Query);
+    public List<? extends Issue> getIssues(String Query);
 }
