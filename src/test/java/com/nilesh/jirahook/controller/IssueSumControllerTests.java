@@ -27,10 +27,9 @@ public class IssueSumControllerTests {
         List<JIRAIssue> jiraIssues = new ArrayList<>();
         jiraIssues.add(new JIRAIssue("TEST-1", 1));
         jiraIssues.add(new JIRAIssue("TEST-2", 2));
-        List<? extends Issue> issues = jiraIssues ;
         Mockito.when(awsQueue.pushMessage("QUERY")).thenReturn(200);
         Mockito.when(awsQueue.pushMessage("FALSE")).thenReturn(404);
-        Mockito.doReturn(issues).when(issueTrackerService).getIssues("QUERY");
+        Mockito.doReturn(jiraIssues).when(issueTrackerService).getIssues("QUERY");
         Mockito.doReturn(new ArrayList<>()).when(issueTrackerService).getIssues("EMPTY");
         Mockito.doThrow(new RuntimeException("Rest API not available")).when(issueTrackerService).getIssues("EMPTY");
         issueSumController = new IssueSumController(issueTrackerService, awsQueue);
