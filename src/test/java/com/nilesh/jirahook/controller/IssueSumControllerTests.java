@@ -1,20 +1,15 @@
 package com.nilesh.jirahook.controller;
 
-import com.google.gson.Gson;
 import com.nilesh.jirahook.entity.Issue;
 import com.nilesh.jirahook.entity.JIRAIssue;
-import com.nilesh.jirahook.entity.QueueMessage;
 import com.nilesh.jirahook.queue.AmazonSQS;
 import com.nilesh.jirahook.queue.Queue;
 import com.nilesh.jirahook.service.IssueTrackerService;
 import com.nilesh.jirahook.service.impl.JiraTrackerService;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +42,11 @@ public class IssueSumControllerTests {
         Assert.assertEquals("String is not Success", Status, "Success");
     }
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-
-    @Test (expected = RuntimeException.class)
+    @Test
     public void sendMessageException() throws RuntimeException {
-//       expectedEx.expect(RuntimeException.class);
-//       expectedEx.expectMessage("Rest API not available");
-        try {
-            issueSumController.sumIssue("EMPTY", "EMPTY");
-        }
-        catch (RuntimeException ex){
-            throw new RuntimeException();
-        }
+
+        String Status = issueSumController.sumIssue("EMPTY", "EMPTY");
+        Assert.assertEquals("API Should Have Failed", Status, "Fail");
 
     }
 
